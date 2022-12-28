@@ -1,5 +1,17 @@
+:root {
+	--primary: #fde9c9;
+}
+
+* {
+	box-sizing: border-box;
+}
+
 body,
 html {
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
+	height: 100%;
+	width: 100%;
+	min-width: 360px;
+	overflow: auto;
 }

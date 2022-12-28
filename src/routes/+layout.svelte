@@ -1,11 +1,9 @@
 <script>
 	import '@master/css';
 	import '../styles.scss';
-	import { page } from '$app/stores';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { supabase } from '../lib/supabaseClient';
-	import Auth from '../lib/components/Auth.svelte';
 
 	onMount(() => {
 		const {
@@ -20,11 +18,4 @@
 	});
 </script>
 
-{#if !$page.data.session}
-	<Auth />
-{:else}
-	<slot />
-{/if}
-
-<style lang="scss">
-</style>
+<slot />
