@@ -1,15 +1,18 @@
-import type { LayoutServerLoad } from './$types';
+import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { redirect } from '@sveltejs/kit';
 import type { User } from '../lib/api/User';
-import { getSupabase } from '@supabase/auth-helpers-sveltekit';
+import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async (event) => {
 	const { session, supabaseClient } = await getSupabase(event);
 
-	if (!event.url.pathname.startsWith('/auth') && !session) {
-		throw redirect(307, '/auth');
+	console.log(event.url.pathname, !event.url.pathname.startsWith('/auth'));
+	console.log(!session);
+	if (!session) {
+		if (!event.url.pathname.startsWith('/auth')) throw redirect(307, '/auth');
+		return;
 	}
-
+	console.log('test');
 	const { data, error } = await supabaseClient
 		.from('users')
 		.select()
@@ -18,8 +21,9 @@ export const load: LayoutServerLoad = async (event) => {
 
 	if (error) throw error;
 
-	if (!event.url.pathname.startsWith('/new-user') && !data) {
-		throw redirect(307, '/new-user');
+	if (!data) {
+		if (!event.url.pathname.startsWith('/new-user')) throw redirect(307, '/new-user');
+		return;
 	}
 
 	return { session: session, user: data as User | null };
