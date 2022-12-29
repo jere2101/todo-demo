@@ -6,8 +6,6 @@ export const load: PageServerLoad = async (event) => {
 	const { session } = await getSupabase(event);
 
 	if (session) {
-		console.log('redirect', '/');
-		console.log('----------------------');
 		throw redirect(307, '/');
 	}
 

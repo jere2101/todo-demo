@@ -35,7 +35,6 @@ export const actions: Actions = {
 			const { error } = await supabaseClient
 				.from('users')
 				.insert({ id: session?.user.id, name, username });
-
 			if (error) {
 				throw error;
 			}

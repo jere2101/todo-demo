@@ -6,13 +6,11 @@ import type { LayoutServerLoad } from './$types';
 export const load: LayoutServerLoad = async (event) => {
 	const { session, supabaseClient } = await getSupabase(event);
 
-	console.log(event.url.pathname, !event.url.pathname.startsWith('/auth'));
-	console.log(!session);
 	if (!session) {
 		if (!event.url.pathname.startsWith('/auth')) throw redirect(307, '/auth');
 		return;
 	}
-	console.log('test');
+
 	const { data, error } = await supabaseClient
 		.from('users')
 		.select()
